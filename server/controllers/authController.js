@@ -37,18 +37,13 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { query, password } = req.body;
-    const user = await User.login(query, password); // login is a custom static method in user model //
+    let user = await User.login(query, password); // login is a custom static method in user model //
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
+    user.password = undefined;
     createToken(user._id, res);
-    res.status(200).json({
-      id: user._id,
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      image: user.profilePic,
-    });
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useShowToast from "../hooks/useShowToast";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../feature/User";
 
 export default function LoginPage() {
@@ -33,13 +33,14 @@ export default function LoginPage() {
         };
         // Handle successful response
         localStorage.setItem("user-threads", JSON.stringify(item));
-        dispatch(setUser(JSON.stringify(data)));
+        console.log(data);
+        dispatch(setUser(data));
         showToast("Success", "Log in successful", "success");
         navigate("/");
       }
     } catch (error) {
       // Handle network errors
-      const errorMessage = error.response.data.error || "Something went wrong";
+      const errorMessage = error.response.error || "Something went wrong";
       showToast("Error", errorMessage, "error");
     }
   };

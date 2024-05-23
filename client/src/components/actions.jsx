@@ -56,7 +56,7 @@ export default function Action(props) {
   };
   // Include 'id' and 'liked' as dependencies
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-start mb-5">
       <div className="flex items-center -ml-3">
         <div className="flex-1 text-center">
           <button
@@ -72,12 +72,6 @@ export default function Action(props) {
             ) : (
               <Icon icon="icon-park-outline:like" className="text-xl text-gray-500  group-hover:text-red-300" />
             )}
-          </button>
-        </div>
-
-        <div className="flex-1 text-center py-2 m-2">
-          <button href="#" className="mt-1 group flex items-center text-gray-500 p-1.5   rounded-full hover:bg-blue-800 hover:text-blue-300">
-            <Icon icon="gravity-ui:comment" className="text-xl" />
           </button>
         </div>
       </div>

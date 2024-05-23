@@ -20,20 +20,6 @@ const postSchema = new Schema(
       ref: "User",
       default: [],
     },
-    comments: [
-      {
-        text: {
-          type: String,
-          required: true,
-        },
-        userId: {
-          // each comment will have a user id //
-          type: Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-      },
-    ],
   },
   {
     timestamps: true,

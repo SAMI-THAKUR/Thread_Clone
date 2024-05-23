@@ -27,7 +27,7 @@ const useGetUserProfile = (props) => {
       }
     };
     getUser();
-  }, []);
+  }, [props, showToast]);
 
   return { loading, user };
 };

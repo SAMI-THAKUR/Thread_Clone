@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"; // Import useDispatch
 import { Menu, MenuButton, MenuList, MenuItem, Portal, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { setUser } from "../feature/User";
-import { useDispatch } from "react-redux";
 
 export default function Header() {
   const [theme, setTheme] = useState("dark");
+  const [key, setKey] = useState(0);
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
     document.querySelector("html").classList.add(theme);
@@ -21,10 +21,12 @@ export default function Header() {
       setTheme("dark");
     }
   };
+
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user).user;
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch(); // Initialize useDispatch hook
   const toast = useToast();
+
   const logOut = async () => {
     try {
       const res = await axios.get("http://localhost:5000/auth/logout");
@@ -34,10 +36,10 @@ export default function Header() {
         console.log(data.error);
       } else {
         localStorage.removeItem("user-threads");
-        dispatch(setUser(null));
+        dispatch(setUser(null)); // Dispatch setUser action to update user state
         navigate("/");
         toast({
-          title: "Logout succesfully!",
+          title: "Logout successfully!",
           status: "error",
           duration: 2000,
           isClosable: true,
@@ -86,8 +88,8 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <aside id="logo-sidebar" className="hidden  w-fit md:h-screen md:grid md:sticky md:top-0" aria-label="Sidebar">
-        <div className="h-[100vh] w-[350px] px-20 overflow-y-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
+      <aside id="logo-sidebar" className="hidden  w-fit md:h-screen md:grid md:sticky md:top-0 ">
+        <div className="h-[100vh] w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
             <nav className="flex align-middle justify-center pt-5">
               <button onClick={toggleTheme}>
@@ -98,12 +100,8 @@ export default function Header() {
               <li>
                 <Link to="/" logo="bi:house-door-fill" name="Home" />
               </li>
-              <li>
-                <Link to={`/user/${user != null ? user.username : "404"}`} logo="bi:person-fill" name="User" />
-              </li>
-              <li>
-                <Link to="/create" logo="mingcute:add-fill" name="Create" />
-              </li>
+              <li>{user && <Link to={`/user/${user.username}`} logo="solar:user-bold" name="Profile" />}</li>
+              <li>{user && <Link to="/create" logo="mingcute:add-fill" name="Create" />}</li>
             </ul>
           </div>
           {user != null ? (

@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
+const local = JSON.parse(localStorage.getItem("user-threads")) || null;
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user-threads")).value || null,
+  user: local != null ? local.value : null,
 };
 
 const userSlice = createSlice({

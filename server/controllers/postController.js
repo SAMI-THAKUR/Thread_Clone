@@ -98,48 +98,6 @@ const likePost = async (req, res) => {
   }
 };
 
-const commentPost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { text } = req.body;
-    let { _id: userId, username, profilePic } = req.user;
-    userId = userId.toString();
-    const post = await Post.findById(id);
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-    const commemnt = {
-      text,
-      userId,
-      username,
-      profilePic,
-    };
-    post.comments.push(commemnt);
-    await post.save();
-    res.status(200).json({ message: "Comment added successfully", id });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const deleteComment = async (req, res) => {
-  try {
-    const { id, commentId } = req.params;
-    const post = await Post.findById(id);
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-    if (commentId !== req.user._id.toString()) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-    post.comments = post.comments.filter((comment) => comment._id.toString() !== commentId);
-    await post.save();
-    res.status(200).json({ message: "Comment deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 const getUsersPosts = async (req, res) => {
   try {
     const { id } = req.params;
@@ -173,4 +131,4 @@ const getFeed = async (req, res) => {
   }
 };
 
-export { createPost, getPost, likePost, commentPost, deletePost, deleteComment, getUsersPosts, getFeed };
+export { createPost, getPost, likePost, deletePost, getUsersPosts, getFeed };

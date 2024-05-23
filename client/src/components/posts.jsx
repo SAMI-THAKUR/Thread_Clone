@@ -4,6 +4,7 @@ import Action from "./actions";
 import useGetUserProfile from "../hooks/useGetUser";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Tweet(props) {
   const Curruser = useSelector((state) => state.user).user;
@@ -14,13 +15,12 @@ export default function Tweet(props) {
   if (loading) {
     return <div>Loading...</div>;
   }
-  // console.log(post["_id"]);
   const date = new Date(post.createdAt).toDateString().split(" ").slice(0, 3).join(" ");
   return (
     <div className="px-5 sm:px-10 md:px-20">
       <div className="flex flex-shrink-0  py-3  z-0">
         <div className="flex w-full  justify-between flex-wrap">
-          <a href="#" className="flex-shrink-0 group block">
+          <NavLink to={`/user/${user.username}`} className="flex-shrink-0 group block">
             <div className="flex items-center">
               <div>
                 <WrapItem>
@@ -36,7 +36,7 @@ export default function Tweet(props) {
                 </p>
               </div>
             </div>
-          </a>
+          </NavLink>
           <div className="flex w-fit gap-5 items-center justify-items-end text-gray-400 font-robo justify-between">
             <span className="text-sm">{date}</span>
             <button
@@ -50,7 +50,7 @@ export default function Tweet(props) {
       </div>
       <div className="pl-5 sm:pl-10 md:pl-16 w-full">
         <p className="text-lg  flex-shrink-[2] text-text dark:text-darktext font-robo">{post.body}</p>
-        {post.image && <Image w={"full"} objectFit="cover" src={post.image} alt="Dan Abramov" className="mt-5 pr-5 w-10 h-10" />}
+        {post.image && <img src={post.image} className="mt-5 pr-5 object-scale-down max-h-[400px] drop-shadow-md rounded-md m-auto" />}
         <Action id={post["_id"]} liked={liked} />
         <div className="flex gap-x-5 -mt-2 mb-3 text-gray-400  -ml-1 font-mono">
           <span>{post.likes.length} likes</span>

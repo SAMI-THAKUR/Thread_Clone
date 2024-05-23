@@ -3,8 +3,9 @@ import { VStack, Flex, Menu, MenuButton, MenuList, MenuItem, Portal, useToast, T
 const shadowStyle = {
   boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.2)", // Add a 1px shadow on each side
 };
-
+import { useSelector } from "react-redux";
 function UserHeader({ user }) {
+  const currUser = useSelector((state) => state.user).user;
   const toast = useToast();
   const copyUrl = () => {
     try {
@@ -23,9 +24,22 @@ function UserHeader({ user }) {
             <h1 className="text-[25px] sm:text-[28px]  text-head dark:text-darkhead font-Konkhmer tracking-wide">{user.name}</h1>
             <div className="flex gap-3 h-fit self-start">
               <h1 className="text-base sm:text-lg  text-text dark:text-darktext font-mono tracking-wider">{user.username}</h1>
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center">
-                thread.neet
-              </span>
+              {currUser.username === user.username && (
+                <button className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center">
+                  Edit Profile
+                </button>
+              )}
+              {currUser.username != user.username ? (
+                !currUser.following.includes(user._id) ? (
+                  <button className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center">
+                    Follow
+                  </button>
+                ) : (
+                  <button className="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-red-900 dark:text-red-300 h-fit self-center">
+                    Unfollow
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
 
