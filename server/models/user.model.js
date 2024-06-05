@@ -29,7 +29,7 @@ const userSchema = new Schema(
     },
     profilePic: {
       type: String,
-      default: "https://res.cloudinary.com/ds7w3ysag/image/upload/v1632871230/avatars/avatar1_r8tq9j.png",
+      default: "https://api.dicebear.com/8.x/fun-emoji/svg?seed=Bear",
     },
     followers: {
       type: [String],

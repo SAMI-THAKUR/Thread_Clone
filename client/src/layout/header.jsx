@@ -8,7 +8,8 @@ import { setUser } from "../feature/User";
 
 export default function Header() {
   const [theme, setTheme] = useState("dark");
-  const [key, setKey] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
     document.querySelector("html").classList.add(theme);
@@ -22,11 +23,15 @@ export default function Header() {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch(); // Initialize useDispatch hook
   const toast = useToast();
-
+  console.log(user);
   const logOut = async () => {
     try {
       const res = await axios.get("http://localhost:5000/auth/logout");
@@ -51,45 +56,17 @@ export default function Header() {
   };
   return (
     <>
-      <div className="fixed md:hidden  z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-slate-400 border border-slate-400 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600 ">
-        <div className=" grid h-full max-w-lg grid-cols-5 mx-auto">
-          <NavLink to="/" className="inline-flex flex-col items-center justify-center px-5  text-text dark:text-darktext">
-            <Icon icon="clarity:home-solid" className="text-2xl" />
-          </NavLink>
-          <NavLink
-            to={`/user/${user != null ? user.username : ""}`}
-            className="inline-flex flex-col items-center justify-center px-5  text-text dark:text-darktext"
-          >
-            <Icon icon="solar:user-bold" className="text-2xl" />
-          </NavLink>
-          <div className="flex items-center justify-center">
-            <button
-              data-tooltip-target="tooltip-new"
-              type="button"
-              className="inline-flex items-center justify-center w-10 h-10 font-medium bg-darkbg dark:bg-bg rounded-full "
-              onClick={toggleTheme}
-            >
-              <Icon icon="bi:threads-fill" className="dark:text-[#2B2730] text-[#f5f5f5] text-[40px]" />
-            </button>
-          </div>
-          <button
-            data-tooltip-target="tooltip-wallet"
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5  text-text dark:text-darktext"
-          >
-            <Icon icon="mingcute:add-fill" className="text-2xl" />
-          </button>
-          <button
-            data-tooltip-target="tooltip-wallet"
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5  text-text dark:text-darktext"
-          >
-            <Icon icon="uil:setting" className="text-2xl" />
-          </button>
-        </div>
-      </div>
-      <aside id="logo-sidebar" className="hidden  w-fit md:h-screen md:grid md:sticky md:top-0 ">
-        <div className="h-[100vh] w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
+      <button onClick={toggleSidebar} className="fixed top-0 left-0 z-50 md:hidden m-5">
+        <Icon icon="bi:list" className="text-[#2B2730] dark:text-[#d5d5d5] text-[40px]" />
+      </button>
+
+      <aside
+        id="sidebar"
+        className={`${
+          isSidebarOpen ? "fixed" : "hidden"
+        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-fit md:sticky bg-opacity-75 bg-gray-900  md:grid`}
+      >
+        <div className="z-50 h-full w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
             <nav className="flex align-middle justify-center pt-5">
               <button onClick={toggleTheme}>
@@ -101,16 +78,17 @@ export default function Header() {
                 <Link to="/" logo="bi:house-door-fill" name="Home" />
               </li>
               <li>{user && <Link to={`/user/${user.username}`} logo="solar:user-bold" name="Profile" />}</li>
+              <li>{user && <Link to="/explore" logo="material-symbols:explore" name="Explore" />}</li>
               <li>{user && <Link to="/create" logo="mingcute:add-fill" name="Create" />}</li>
             </ul>
           </div>
           {user != null ? (
             <div className="flex p-5 mb-5 relative mx-auto">
               <div className="flex justify-between items-start gap-5">
-                <img src={user.image} className="w-12 h-12 rounded-full" alt="image description" />
-                <div className="text-xl my-auto leading-snug  font-semibold text-head dark:text-darkhead">{user == null ? "" : user.username}</div>
+                <img src={user.profilePic} className="w-12 h-12 rounded-full" alt="image description" />
+                <div className="text-xl my-auto leading-snug font-semibold text-head dark:text-darkhead">{user == null ? "" : user.username}</div>
                 <Menu>
-                  <MenuButton className="dark:text-darktext text-text my-auto  flex align-middle">
+                  <MenuButton className="dark:text-darktext text-text my-auto flex align-middle">
                     <Icon icon="icon-park-solid:more-two" className="my-auto text-2xl" />
                   </MenuButton>
                   <Portal>

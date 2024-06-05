@@ -1,19 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit";
-const local = JSON.parse(localStorage.getItem("user-threads")) || null;
-const initialState = {
-  user: local != null ? local.value : null,
-};
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const getUserProfile = createAsyncThunk("user/getUserProfile", async () => {
+  const res = await axios.get("http://localhost:5000/user/auth", {
+    credentials: "include",
+    withCredentials: true,
+  });
+  console.log(res.data);
+  return res.data.user;
+});
 
 const userSlice = createSlice({
   name: "user",
-  initialState,
+  initialState: {
+    user: null,
+    loading: false,
+  },
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setFollowing: (state, action) => {
+      state.user.following = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUserProfile.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getUserProfile.rejected, (state) => {
+      state.loading = false;
+    });
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setFollowing } = userSlice.actions;
 
 export default userSlice.reducer;

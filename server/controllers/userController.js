@@ -1,6 +1,33 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+import { v2 as cloudinary } from "cloudinary";
+
+const Auth = (req, res) => {
+  const token = req.cookies.auth;
+  console.log(token);
+  // check json web token exists & is verified
+  if (token) {
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decodedToken) => {
+      if (err) {
+        console.log(err.message);
+        res.status(401).json({ error: "Unauthorized" });
+      } else {
+        const user = await User.findById(decodedToken.id).select("-password");
+        if (!user) {
+          res.status(404).json({ error: "User not found" });
+        }
+        return res.status(200).json({ user });
+      }
+    });
+  } else {
+    res.status(401).json({ error: "error" });
+  }
+};
+
 const getProfile = async (req, res) => {
   const { identifier } = req.params; // Assuming the parameter name can be 'username' or 'id'
   try {
@@ -83,38 +110,30 @@ const followUnfollow = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id: currentUserId } = req.user;
-  const { name, username, email, profilePic, bio } = req.body;
+  let { name, username, email, profilePic, bio } = req.body;
   const { id } = req.params;
   if (id !== currentUserId.toString()) return res.status(400).json({ error: "You are not authorized to perform this action" });
   try {
     let user = await User.findById(currentUserId);
     if (!user) return res.status(400).json({ error: "Invalid password" });
-    if (profilePic) {
-      if (profilePic) {
-        if (user.profilePic) {
-          await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
-        }
+    if (profilePic != "") {
+      try {
         const uploadedResponse = await cloudinary.uploader.upload(profilePic);
         profilePic = uploadedResponse.secure_url;
+        console.log("image uploaded");
+      } catch (err) {
+        console.error("Error uploading image:", err);
+        return res.status(500).json({ error: "Error uploading image" });
       }
     }
-    await Post.updateMany(
-      { "replies.userId": currentUserId },
-      {
-        $set: {
-          "replies.$[reply].username": user.username,
-          "replies.$[reply].userProfilePic": user.profilePic,
-        },
-      },
-      { arrayFilters: [{ "reply.userId": userId }] },
-    );
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
+    user.password = user.password;
     user = await user.save();
-    res.status(200).json({ user: user.name });
+    res.status(200).json({ message: "succes" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -141,7 +160,7 @@ const suggestedUser = async (req, res) => {
   try {
     const followingUser = await User.findById(currentUserId).select("following");
     let users = await User.aggregate([{ $match: { _id: { $ne: currentUserId } } }, { $sample: { size: 5 } }]);
-    users = users.filter((user) => followingUser.following.includes(user._id));
+    users = users.filter((user) => !followingUser.following.includes(user._id));
     const suggestedUsers = users.slice(0, 5);
     suggestedUsers.forEach((user) => (user.password = null));
     res.status(200).json({ suggestedUsers });
@@ -149,5 +168,4 @@ const suggestedUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-export { followUnfollow, updateUser, changePassword, getProfile, suggestedUser };
+export { followUnfollow, updateUser, changePassword, getProfile, suggestedUser, Auth };

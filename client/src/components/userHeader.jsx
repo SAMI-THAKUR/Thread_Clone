@@ -3,10 +3,21 @@ import { VStack, Flex, Menu, MenuButton, MenuList, MenuItem, Portal, useToast, T
 const shadowStyle = {
   boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.2)", // Add a 1px shadow on each side
 };
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import useShowToast from "../hooks/useShowToast";
+import { setFollowing } from "../feature/User";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 function UserHeader({ user }) {
-  const currUser = useSelector((state) => state.user).user;
+  const store = useSelector((state) => state.user);
+  const currUser = store.user;
+  const [following, setFollow] = useState(currUser.following.includes(user._id));
+  const dispatch = useDispatch();
+
   const toast = useToast();
+  console.log(user);
   const copyUrl = () => {
     try {
       const url = window.location.href;
@@ -14,6 +25,35 @@ function UserHeader({ user }) {
       console.log("URL copied to clipboard");
     } catch (error) {
       console.error("Failed to copy URL to clipboard:", error);
+    }
+  };
+  const show = useShowToast();
+
+  const followUnfollow = async () => {
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/user/followUnfollow/${user._id}`,
+        {},
+        {
+          credentials: "include",
+          withCredentials: true,
+        },
+      );
+      if (res.data.error) {
+        show("Error", res.data.error, "error");
+      } else {
+        show("Success", res.data.message, "success");
+        let newFollowing = [...currUser.following];
+        if (following) {
+          newFollowing = newFollowing.filter((id) => id !== user._id);
+        } else {
+          newFollowing.push(user._id);
+        }
+        dispatch(setFollowing(newFollowing));
+        setFollow(!following);
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
   return (
@@ -25,17 +65,26 @@ function UserHeader({ user }) {
             <div className="flex gap-3 h-fit self-start">
               <h1 className="text-base sm:text-lg  text-text dark:text-darktext font-mono tracking-wider">{user.username}</h1>
               {currUser.username === user.username && (
-                <button className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center">
+                <NavLink
+                  to="/update"
+                  className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center"
+                >
                   Edit Profile
-                </button>
+                </NavLink>
               )}
               {currUser.username != user.username ? (
-                !currUser.following.includes(user._id) ? (
-                  <button className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center">
+                following == false ? (
+                  <button
+                    onClick={followUnfollow}
+                    className="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 h-fit self-center"
+                  >
                     Follow
                   </button>
                 ) : (
-                  <button className="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-red-900 dark:text-red-300 h-fit self-center">
+                  <button
+                    onClick={followUnfollow}
+                    className="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-2 rounded dark:bg-red-900 dark:text-red-300 h-fit self-center"
+                  >
                     Unfollow
                   </button>
                 )
@@ -43,7 +92,7 @@ function UserHeader({ user }) {
             </div>
           </div>
 
-          <img className="rounded-full w-20 sm:w-36 h-20 sm:h-36" src={user.profilePic} alt="image description" />
+          <img className="rounded-full w-20 sm:w-36 h-20 sm:h-36" src={user["profilePic"]} alt="image description" />
         </div>
         <p className="mb-3 text-[13px] sm:text-[16px]  text-text dark:text-darktext mt-5 self-start">{user.bio}</p>
         <div className="flex justify-between w-full">

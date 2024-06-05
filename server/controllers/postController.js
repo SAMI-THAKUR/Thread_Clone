@@ -113,7 +113,6 @@ const getUsersPosts = async (req, res) => {
 };
 
 const getFeed = async (req, res) => {
-  console.log("Fetching feed...");
   try {
     const userId = req.user._id;
     const user = await User.findById(userId);
@@ -123,7 +122,11 @@ const getFeed = async (req, res) => {
 
     const following = user.following;
 
-    const feedPosts = await Post.find({ postedBy: { $in: following } }).sort({ createdAt: -1 });
+    const feedPosts = await Post.find({
+      postedBy: { $in: following },
+      postedBy: { $ne: userId },
+    }).sort({ createdAt: -1 });
+
     res.status(200).json(feedPosts);
   } catch (err) {
     console.error("Error fetching feed:", err);

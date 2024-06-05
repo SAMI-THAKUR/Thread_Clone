@@ -8,6 +8,13 @@ import { NavLink } from "react-router-dom";
 
 export default function Tweet(props) {
   const Curruser = useSelector((state) => state.user).user;
+  if (!Curruser) {
+    return (
+      <Flex justifyContent={"center"}>
+        <Spinner size={"xl"} />
+      </Flex>
+    );
+  }
   const { post } = props;
   const liked = post.likes.includes(Curruser.id);
   // console.log(Curruser.id);
@@ -15,10 +22,11 @@ export default function Tweet(props) {
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(user.username);
   const date = new Date(post.createdAt).toDateString().split(" ").slice(0, 3).join(" ");
   return (
     <div className="px-5 sm:px-10 md:px-20">
-      <div className="flex flex-shrink-0  py-3  z-0">
+      <div className="flex flex-shrink-0  py-3 ">
         <div className="flex w-full  justify-between flex-wrap">
           <NavLink to={`/user/${user.username}`} className="flex-shrink-0 group block">
             <div className="flex items-center">
@@ -54,7 +62,6 @@ export default function Tweet(props) {
         <Action id={post["_id"]} liked={liked} />
         <div className="flex gap-x-5 -mt-2 mb-3 text-gray-400  -ml-1 font-mono">
           <span>{post.likes.length} likes</span>
-          <span>{post.comments.length} comments</span>
         </div>
       </div>
       <hr className="border-gray-600"></hr>

@@ -16,9 +16,8 @@ export default function UserPage() {
     const fetchUserPosts = async () => {
       try {
         if (user?._id) {
-          console.log(user["_id"]);
           const res = await axios.get(`http://localhost:5000/post/user/${user["_id"]}`);
-          console.log(res.data);
+          dispatch(setPost([]));
           dispatch(setPost(res.data.posts));
         }
       } catch (error) {
@@ -36,9 +35,8 @@ export default function UserPage() {
     );
   }
   if (!user && !loading) return <h1>User not found</h1>;
-  console.log(post);
   return (
-    <div className="z-0 pb-20 w-full mt-10">
+    <div className="z-0 pb-20 w-full mt-10 h-dvh">
       <UserHeader user={user} />
       <div className="w-full mt-10">
         {post.map((post, idx) => (

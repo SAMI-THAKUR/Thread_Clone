@@ -32,7 +32,6 @@ export default function LoginPage() {
           expiry: now.getTime() + 3 * 24 * 60 * 60 * 1000,
         };
         // Handle successful response
-        localStorage.setItem("user-threads", JSON.stringify(item));
         console.log(data);
         dispatch(setUser(data));
         showToast("Success", "Log in successful", "success");

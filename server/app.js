@@ -21,9 +21,9 @@ app.use(
   }),
 );
 cloudinary.config({
-  cloud_name: "do6zbrxl0",
-  api_key: "367282193454168",
-  api_secret: "E27-dcJxLA7VXQk-N03r-ULDA_Q",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
 // middleware //

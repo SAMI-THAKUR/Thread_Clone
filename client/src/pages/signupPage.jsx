@@ -37,6 +37,7 @@ export default function SignupPage() {
         localStorage.setItem("user-threads", JSON.stringify(item));
         dispatch(setUser(JSON.stringify(data)));
         showToast("Success", "Sign up successful", "success");
+        navigate("/");
       }
     } catch (error) {
       // Handle network errors
