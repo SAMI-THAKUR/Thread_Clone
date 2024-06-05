@@ -26,7 +26,7 @@ const CreatePost = () => {
   const createPost = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/post/create",
+        "https://thread-clone-6f8g.onrender.com/post/create",
         { body, image: imagePreview },
         {
           withCredentials: true,

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getUserProfile = createAsyncThunk("user/getUserProfile", async () => {
-  const res = await axios.get("http://localhost:5000/user/auth", {
+  const res = await axios.get("https://thread-clone-6f8g.onrender.com/user/auth", {
     credentials: "include",
     withCredentials: true,
   });

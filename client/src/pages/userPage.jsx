@@ -16,7 +16,7 @@ export default function UserPage() {
     const fetchUserPosts = async () => {
       try {
         if (user?._id) {
-          const res = await axios.get(`http://localhost:5000/post/user/${user["_id"]}`);
+          const res = await axios.get(`https://thread-clone-6f8g.onrender.com/post/user/${user["_id"]}`);
           dispatch(setPost([]));
           dispatch(setPost(res.data.posts));
         }

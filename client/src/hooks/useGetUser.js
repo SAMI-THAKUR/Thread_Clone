@@ -9,7 +9,7 @@ const useGetUserProfile = (props) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/user/profile/${props}`, {
+        const res = await fetch(`https://thread-clone-6f8g.onrender.com/user/profile/${props}`, {
           credentials: "include",
           withCredentials: true,
         });

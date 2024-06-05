@@ -15,7 +15,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://thread-clone-6f8g.onrender.com/auth/login",
         { query, password },
         {
           credentials: "include",

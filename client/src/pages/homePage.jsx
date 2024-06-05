@@ -12,7 +12,7 @@ function HomePage() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/post/getfeed", {
+        const res = await axios.get("https://thread-clone-6f8g.onrender.com/post/getfeed", {
           credentials: "include",
           withCredentials: true,
         });

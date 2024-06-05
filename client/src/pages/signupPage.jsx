@@ -16,7 +16,7 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/signup",
+        "https://thread-clone-6f8g.onrender.com/auth/signup",
         { name, username, email, password },
         {
           credentials: "include",

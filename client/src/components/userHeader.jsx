@@ -32,7 +32,7 @@ function UserHeader({ user }) {
   const followUnfollow = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/user/followUnfollow/${user._id}`,
+        `https://thread-clone-6f8g.onrender.com/user/followUnfollow/${user._id}`,
         {},
         {
           credentials: "include",

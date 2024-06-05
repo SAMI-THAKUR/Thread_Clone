@@ -54,7 +54,7 @@ export default function Update() {
     console.log("clicked");
     try {
       const res = await axios.put(
-        `http://localhost:5000/user/update/${user._id}`,
+        `https://thread-clone-6f8g.onrender.com/user/update/${user._id}`,
         {
           name,
           email,
