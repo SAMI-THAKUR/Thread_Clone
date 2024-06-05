@@ -28,7 +28,7 @@ function HomePage() {
       }
     };
     getFeed(); // Call the getFeed function when the component mounts or when user changes
-  }, [user, dispatch]);
+  }, [dispatch]);
 
   if (user === null) return <div className="w-full h-full flex items-center justify-center text-yellow-50">Please login to view your feed</div>;
 

@@ -9,7 +9,7 @@ function Layout() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserProfile());
-  }, [dispatch]);
+  }, []);
   const store = useSelector((state) => state.user);
   if (store.loading) {
     return (
