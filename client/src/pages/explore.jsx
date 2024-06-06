@@ -7,16 +7,11 @@ export default function Explore() {
   const [suggest, setSuggest] = useState([]);
   const user = useSelector((state) => state.user).user;
   useEffect(() => {
-    const getFeed = async () => {
+    const getSuggestion = async () => {
       try {
-        const res = await axios.get(
-          "https://thread-clone-6f8g.onrender.com/user/suggested",
-          {},
-          {
-            credentials: "include",
-            withCredentials: true,
-          },
-        );
+        const res = await axios.get("https://thread-clone-6f8g.onrender.com/user/suggested", {
+          withCredentials: true,
+        });
         const data = res.data;
         if (data.error) {
           console.log(data.error);
@@ -28,7 +23,8 @@ export default function Explore() {
         console.log(error);
       }
     };
-    getFeed(); // Call the getFeed function when the component mounts or when user changes
+
+    getSuggestion(); // Call the getFeed function when the component mounts or when user changes
   }, [user]);
   return (
     <div className="h-dvh">
