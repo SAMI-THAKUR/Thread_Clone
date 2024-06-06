@@ -98,7 +98,7 @@ export default function Header() {
                           logOut();
                         }}
                       >
-                        <div className="flex gap-4 ">
+                        <div className="flex gap-4 z-50">
                           <Icon icon="solar:copy-bold" className="my-auto" />
                           <span className="font-Konkhmer">Logout</span>
                         </div>
