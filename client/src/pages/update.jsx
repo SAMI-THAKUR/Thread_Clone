@@ -7,20 +7,13 @@ export default function Update() {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.user);
   const user = store.user;
-  if (!user) {
-    return (
-      <Flex justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </Flex>
-    );
-  }
-
   // Separate state variables
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio);
-  const [profilePic, setProfilePic] = useState("");
+  const [profilePic, setProfilePic] = useState();
+  const [password, setPassword] = useState();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -36,6 +29,10 @@ export default function Update() {
 
   const handleBioChange = (e) => {
     setBio(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
   // Function to handle changes in the image input
@@ -61,6 +58,7 @@ export default function Update() {
           username,
           profilePic,
           bio,
+          password,
         },
         {
           credentials: "include",
@@ -126,7 +124,17 @@ export default function Update() {
                   onChange={handleUsernameChange}
                 />
               </label>
-
+              {/* Password input */}
+              <label class="relative block p-3 border-2 border-black rounded my-5" htmlFor="username">
+                <span class="text-text dark:text-darktext text-md font-semibold" htmlFor="username">
+                  Password
+                </span>
+                <input
+                  class="text-text dark:text-darktext w-full bg-transparent p-0 text-sm focus:outline-none"
+                  type="password"
+                  onChange={handlePasswordChange}
+                />
+              </label>
               {/* Profile picture preview */}
               <div class="shrink-0 mt-5">
                 <img class="h-10 w-10 object-cover rounded-full my-5" src={profilePic} alt="Current profile photo" />

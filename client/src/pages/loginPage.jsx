@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useShowToast from "../hooks/useShowToast";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "../feature/User";
 
 export default function LoginPage() {
