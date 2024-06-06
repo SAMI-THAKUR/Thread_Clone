@@ -32,7 +32,7 @@ function UserHeader({ user }) {
   const followUnfollow = async () => {
     try {
       const res = await axios.post(
-        `https://thread-clone-6f8g.onrender.com/user/followUnfollow/${user._id}`,
+        `https://thread-clone-pi-gules.vercel.app/user/followUnfollow/${user._id}`,
         {},
         {
           credentials: "include",
