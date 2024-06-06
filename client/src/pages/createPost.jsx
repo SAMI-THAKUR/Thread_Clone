@@ -26,7 +26,7 @@ const CreatePost = () => {
   const createPost = async () => {
     try {
       const res = await axios.post(
-        "https://thread-clone-pi-gules.vercel.app/post/create",
+        "https://thread-clone-6f8g.onrender.com/post/create",
         { body, image: imagePreview },
         {
           withCredentials: true,

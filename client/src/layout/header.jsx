@@ -34,7 +34,7 @@ export default function Header() {
   console.log(user);
   const logOut = async () => {
     try {
-      const res = await axios.get("https://thread-clone-pi-gules.vercel.app/auth/logout");
+      const res = await axios.get("https://thread-clone-6f8g.onrender.com/auth/logout");
       const data = res.data;
       console.log(data);
       if (data.error) {

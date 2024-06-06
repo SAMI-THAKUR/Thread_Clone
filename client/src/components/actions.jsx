@@ -15,7 +15,7 @@ export default function Action(props) {
   const likePost = async () => {
     try {
       const res = await axios.post(
-        `https://thread-clone-pi-gules.vercel.app/post/like/${id}`,
+        `https://thread-clone-6f8g.onrender.com/post/like/${id}`,
         {},
         {
           withCredentials: true,
