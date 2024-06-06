@@ -113,47 +113,43 @@ const updateUser = async (req, res) => {
   let { name, username, email, profilePic, bio, password } = req.body;
   const { id } = req.params;
 
-  // Check if the user is authorized to update this profile
   if (id !== currentUserId.toString()) {
     return res.status(400).json({ error: "You are not authorized to perform this action" });
   }
 
   try {
-    // Fetch the user from the database
-    let user = await User.findById(currentUserId);
-    if (!user) {
-      return res.status(400).json({ error: "User not found" });
-    }
-
-    // If profilePic is provided and not empty, upload it
+    let updatedFields = {};
     if (profilePic) {
       try {
         const uploadedResponse = await cloudinary.uploader.upload(profilePic);
-        profilePic = uploadedResponse.secure_url;
-        console.log("Image uploaded");
+        updatedFields.profilePic = uploadedResponse.secure_url;
+        console.log("Image uploaded:", updatedFields.profilePic);
       } catch (err) {
         console.error("Error uploading image:", err);
         return res.status(500).json({ error: "Error uploading image" });
       }
     }
 
-    // Update the user's fields
-    user.name = name || user.name;
-    user.username = username || user.username;
-    user.email = email || user.email;
-    user.profilePic = profilePic || user.profilePic;
-    user.bio = bio || user.bio;
-
-    // Only update the password if it's provided
     if (password) {
-      user.password = password;
+      updatedFields.password = password;
+      console.log("Password updated");
+    } else {
+      console.log("Password not provided");
     }
 
-    // Save the updated user
-    await user.save();
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: currentUserId },
+      { $set: { name, username, email, bio, ...updatedFields } },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
     res.status(200).json({ message: "Success" });
   } catch (err) {
-    console.error("Error updating user:", err); // Log the error
+    console.error("Error updating user:", err);
     res.status(500).json({ error: err.message });
   }
 };

@@ -50,10 +50,12 @@ const userSchema = new Schema(
   },
 );
 
-// fire a function before doc saved to db
 userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt(10); // generates a salt
-  this.password = await bcrypt.hash(this.password, salt);
+  // Check if the password field is modified
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt(10); // generates a salt
+    this.password = await bcrypt.hash(this.password, salt); // hashes the password with the salt
+  }
   next();
 });
 

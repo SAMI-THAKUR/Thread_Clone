@@ -22,9 +22,6 @@ export default function Tweet(props) {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (!user) {
-    return;
-  }
   console.log(user.username);
   const date = new Date(post.createdAt).toDateString().split(" ").slice(0, 3).join(" ");
   return (
