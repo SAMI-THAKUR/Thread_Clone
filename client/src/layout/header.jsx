@@ -63,7 +63,7 @@ export default function Header() {
         id="sidebar"
         className={`${
           isSidebarOpen ? "fixed" : "hidden"
-        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-fit md:pr-5 md:sticky bg-opacity-75 bg-gray-900  md:grid`}
+        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-64 md:pr-5 md:sticky bg-opacity-75 bg-gray-900  md:grid`}
       >
         <div className="z-50 h-full w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
