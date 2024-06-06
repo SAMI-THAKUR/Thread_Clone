@@ -31,7 +31,6 @@ export default function Header() {
   const user = useSelector((state) => state.user).user;
   const dispatch = useDispatch(); // Initialize useDispatch hook
   const toast = useToast();
-  console.log(user);
   const logOut = async () => {
     try {
       const res = await axios.get("https://thread-clone-pi-gules.vercel.app/auth/logout");
