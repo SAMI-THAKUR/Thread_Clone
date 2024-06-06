@@ -59,11 +59,16 @@ const login = async (req, res) => {
 
 const logoutUser = (req, res) => {
   try {
-    res.cookie("auth", "", { maxAge: 0.1 });
+    // Clear the cookie by setting its maxAge to 0 and using the same options as when it was set
+    res.cookie("auth", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: true, // Set secure flag to true in production
+    });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (err) {
+    console.error("Error in logoutUser: ", err.message);
     res.status(500).json({ error: err.message });
-    console.log("Error in signupUser: ", err.message);
   }
 };
 
