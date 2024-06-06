@@ -10,15 +10,6 @@ function Layout() {
   useEffect(() => {
     dispatch(getUserProfile());
   }, [dispatch]);
-  const store = useSelector((state) => state.user);
-  if (store.loading) {
-    return (
-      <Flex justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </Flex>
-    );
-  }
-  console.log(store);
   return (
     <main className="flex gap-10 w-screen bg-bg dark:bg-darkbg">
       <Header />
