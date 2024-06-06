@@ -4,10 +4,15 @@ import createToken from "../utils/helpers/generateJWT.js";
 
 dotenv.config();
 
+const bcrypt = require("bcrypt");
+
 const signup = async (req, res) => {
   try {
     const { name, email, username, password } = req.body;
-    // Find if the user already exists //
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Find if the user already exists
     const exist = await User.findOne({
       email: email,
       username: username,
@@ -15,16 +20,22 @@ const signup = async (req, res) => {
     if (exist) {
       return res.status(400).json({ error: "User already exists" });
     }
+
+    // Create a new user
     const user = await User.create({
       name,
       email,
       username,
-      password,
+      password: hashedPassword,
     });
+
+    // Generate a token
     createToken(user._id, res);
+
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: "unable to signin" });
+    console.error(error);
+    res.status(400).json({ error: "Unable to sign up" });
   }
 };
 

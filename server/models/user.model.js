@@ -50,15 +50,6 @@ const userSchema = new Schema(
   },
 );
 
-userSchema.pre("save", async function (next) {
-  // Check if the password field is modified
-  if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(10); // generates a salt
-    this.password = await bcrypt.hash(this.password, salt); // hashes the password with the salt
-  }
-  next();
-});
-
 // userSchema.pre("findOneAndUpdate", async function (next) {
 //   const { password } = this.getUpdate();
 //   if (password) {
