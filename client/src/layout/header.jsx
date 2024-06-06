@@ -63,7 +63,7 @@ export default function Header() {
         id="sidebar"
         className={`${
           isSidebarOpen ? "fixed" : "hidden"
-        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-fit md:px-5 md:sticky bg-opacity-75 bg-gray-900  md:grid`}
+        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-fit md:pr-5 md:sticky bg-opacity-75 bg-gray-900  md:grid`}
       >
         <div className="z-50 h-full w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
@@ -82,7 +82,7 @@ export default function Header() {
             </ul>
           </div>
           {user != null ? (
-            <div className="flex p-5 mb-5 relative mx-auto">
+            <div className="flex p-5 mb-5 relative mx-auto z-50">
               <div className="flex justify-between items-start gap-5">
                 <img src={user.profilePic} className="w-12 h-12 rounded-full" alt="image description" />
                 <div className="text-xl my-auto leading-snug font-semibold text-head dark:text-darkhead">{user == null ? "" : user.username}</div>
@@ -108,7 +108,7 @@ export default function Header() {
               </div>
             </div>
           ) : (
-            <div className="mb-10 flex items-center justify-center gap-x-3">
+            <div className="mb-10 flex items-center justify-center gap-x-3 z-50">
               <NavLink className="bg-transparent p-2 rounded-lg text-bg border-2 border-bg w-28 text-center" to="/signup">
                 Signup
               </NavLink>
