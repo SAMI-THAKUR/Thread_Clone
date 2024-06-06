@@ -143,12 +143,17 @@ const updateUser = async (req, res) => {
     user.email = email || user.email;
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
-    user.password = password || user.password;
+
+    // Only update the password if it's provided
+    if (password) {
+      user.password = password;
+    }
 
     // Save the updated user
     await user.save();
     res.status(200).json({ message: "Success" });
   } catch (err) {
+    console.error("Error updating user:", err); // Log the error
     res.status(500).json({ error: err.message });
   }
 };

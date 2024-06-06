@@ -82,7 +82,7 @@ export default function Header() {
             </ul>
           </div>
           {user != null ? (
-            <div className="flex p-5 mb-5 relative mx-auto z-50">
+            <div className="flex p-3 mb-5 relative mx-auto z-50">
               <div className="flex justify-between items-start gap-5">
                 <img src={user.profilePic} className="w-12 h-12 rounded-full" alt="image description" />
                 <div className="text-xl my-auto leading-snug font-semibold text-head dark:text-darkhead">{user == null ? "" : user.username}</div>
