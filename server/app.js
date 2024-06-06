@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ["https://thread-clone-bjsq.vercel.app", "http://localhost:8000"], // Specify the exact origin
+    origin: "https://thread-clone-bjsq.vercel.app", // Specify the exact origin
   }),
 );
 cloudinary.config({
