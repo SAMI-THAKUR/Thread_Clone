@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: ["https://thread-clone-bjsq.vercel.app", "https://thread-clone-pi-gules.vercel.app"],
+    origin: "https://thread-clone-bjsq.vercel.app", // Specify the exact origin
   }),
 );
 cloudinary.config({
@@ -28,8 +28,10 @@ cloudinary.config({
 
 // middleware //
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  const origin = req.header("Origin");
+  if (origin) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
   next();
 });
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
