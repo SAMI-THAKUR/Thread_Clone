@@ -20,7 +20,6 @@ export default function SignupPage() {
         "https://thread-clone-pi-gules.vercel.app/auth/signup",
         { name, username, email, password },
         {
-          credentials: "include",
           withCredentials: true,
         },
       );
@@ -28,7 +27,7 @@ export default function SignupPage() {
       if (data.error) {
         showToast("Error", data.error, "error");
       } else {
-        dispatch(setUser(JSON.stringify(data)));
+        dispatch(setUser(data));
         showToast("Success", "Sign up successful", "success");
         navigate("/");
       }
