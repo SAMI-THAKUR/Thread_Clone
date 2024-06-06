@@ -44,7 +44,7 @@ function ProfileCard(props) {
   const { user } = props;
   return (
     <div class="text-center p-6 px-12 bg-gray-800 border-2 border-head dark:border-darkhead h-fit">
-      <img src={user.profilePic} className="mx-auto rounded-full mb-5" />
+      <img src={user.profilePic} className="mx-auto rounded-full mb-5 w-20 h-20" />
       <p class="text-sm text-gray-100 font-mono">{user.username}</p>
       <div class="mt-5">
         <NavLink to={`/user/${user.username}`} className="border-2 border-white rounded-full py-2 px-3 text-xs font-semibold text-gray-100">
