@@ -24,7 +24,7 @@ const signup = async (req, res) => {
     createToken(user._id, res);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: "phat gaya bc" });
+    res.status(400).json({ error: "unable to signin" });
   }
 };
 

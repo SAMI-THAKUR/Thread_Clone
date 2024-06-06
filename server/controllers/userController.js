@@ -110,7 +110,7 @@ const followUnfollow = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id: currentUserId } = req.user;
-  let { name, username, email, profilePic, bio } = req.body;
+  let { name, username, email, profilePic, bio, password } = req.body;
   const { id } = req.params;
 
   // Check if the user is authorized to update this profile
@@ -143,6 +143,7 @@ const updateUser = async (req, res) => {
     user.email = email || user.email;
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
+    user.password = password || user.password;
 
     // Save the updated user
     await user.save();
