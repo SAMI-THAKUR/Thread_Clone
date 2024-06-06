@@ -36,7 +36,7 @@ export default function UserPage() {
   }
   if (!user && !loading) return <h1 style={{ height: "100%" }}>User not found</h1>;
   return (
-    <div className="z-0 pb-20 w-full mt-10" style={{ height: "100%" }}>
+    <div className="z-10 pb-20 w-screen mx-5 mt-10 h-full" style={{ height: "100%" }}>
       <UserHeader user={user} />
       <div className="w-full mt-10">
         {post.map((post, idx) => (

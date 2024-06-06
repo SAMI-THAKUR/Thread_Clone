@@ -20,7 +20,7 @@ function Layout() {
   }
   console.log(store);
   return (
-    <main className="flex gap-10 w-screen bg-bg dark:bg-darkbg">
+    <main className="flex overflow-x-hidden w-screen bg-bg dark:bg-darkbg" style={{ height: "100vh" }}>
       <Header />
       <Outlet />
     </main>

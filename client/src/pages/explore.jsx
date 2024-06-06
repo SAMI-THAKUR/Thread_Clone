@@ -27,7 +27,7 @@ export default function Explore() {
     getSuggestion(); // Call the getFeed function when the component mounts or when user changes
   }, [user]);
   return (
-    <div className="h-dvh">
+    <div className="h-full">
       <div class="flex justify-center items-center h-20 font-Konkhmer  text-head dark:text-darkhead font-semibold text-3xl tracking-widest">
         Suggested Users
       </div>

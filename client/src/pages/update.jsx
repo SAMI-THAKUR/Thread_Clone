@@ -80,7 +80,7 @@ export default function Update() {
 
   return (
     <div>
-      <div class="sm:mx-32 lg:mx-32 xl:mx-72 h-screen px-10">
+      <div class="sm:mx-32 lg:mx-32 xl:mx-72 h-full px-10 py-10">
         <div class="flex justify-between container mx-auto">
           <div class="w-full">
             <div class="mt-4 px-4">

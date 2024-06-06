@@ -63,9 +63,9 @@ export default function Header() {
         id="sidebar"
         className={`${
           isSidebarOpen ? "fixed" : "hidden"
-        } z-30 top-0 left-0 h-screen md:h-100% md:overflow-hidden w-full md:w-64 md:pr-5 md:sticky bg-opacity-75 bg-gray-900  md:grid`}
+        } z-10 top-0 left-0 h-screen md:h-100% md:overflow-hidden md:w-[650px]  md:mr-3 md:pr-10 md:sticky bg-opacity-75 bg-gray-900 md:bg-transparent  md:grid`}
       >
-        <div className="z-50 h-full w-[350px] px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
+        <div className=" h-full w-full px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
             <nav className="flex align-middle justify-center pt-5">
               <button onClick={toggleTheme}>
@@ -82,7 +82,7 @@ export default function Header() {
             </ul>
           </div>
           {user != null ? (
-            <div className="flex p-3 mb-5 relative mx-auto z-50">
+            <div className="flex p-3 mb-5 relative mx-auto z-auto w-fit">
               <div className="flex justify-between items-start gap-5">
                 <img src={user.profilePic} className="w-12 h-12 rounded-full" alt="image description" />
                 <div className="text-xl my-auto leading-snug font-semibold text-head dark:text-darkhead">{user == null ? "" : user.username}</div>
@@ -90,25 +90,23 @@ export default function Header() {
                   <MenuButton className="dark:text-darktext text-text my-auto flex align-middle">
                     <Icon icon="icon-park-solid:more-two" className="my-auto text-2xl" />
                   </MenuButton>
-                  <Portal>
-                    <MenuList className="h=10" py="2px" px="5px">
-                      <MenuItem
-                        onClick={() => {
-                          logOut();
-                        }}
-                      >
-                        <div className="flex gap-4 z-50">
-                          <Icon icon="solar:copy-bold" className="my-auto" />
-                          <span className="font-Konkhmer">Logout</span>
-                        </div>
-                      </MenuItem>
-                    </MenuList>
-                  </Portal>
+                  <MenuList className="h-10 z-50 ml-10" py="2px" px="5px">
+                    <MenuItem
+                      onClick={() => {
+                        logOut();
+                      }}
+                    >
+                      <div className="flex gap-4 z-[100]">
+                        <Icon icon="solar:copy-bold" className="my-auto" />
+                        <span className="font-Konkhmer">Logout</span>
+                      </div>
+                    </MenuItem>
+                  </MenuList>
                 </Menu>
               </div>
             </div>
           ) : (
-            <div className="mb-10 flex items-center justify-center gap-x-3 z-50">
+            <div className="mb-10 flex items-center justify-center gap-x-3 z-50 w-fit">
               <NavLink className="bg-transparent p-2 rounded-lg text-bg border-2 border-bg w-28 text-center" to="/signup">
                 Signup
               </NavLink>
