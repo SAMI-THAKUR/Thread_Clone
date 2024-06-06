@@ -11,7 +11,7 @@ const requireAuth = (req, res, next) => {
     jwt.verify(token, process.env.SECRET_KEY, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        res.status(401).json({ error: "Unauthorized" });
+        res.status(401).json({ error: "Unauthorized acces" });
       } else {
         const user = await User.findById(decodedToken.id).select("-password");
         if (!user) {
