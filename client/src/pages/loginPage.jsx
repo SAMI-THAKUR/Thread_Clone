@@ -26,11 +26,6 @@ export default function LoginPage() {
       if (data.error) {
         showToast("Error", data.error, "error");
       } else {
-        const now = new Date();
-        const item = {
-          value: data,
-          expiry: now.getTime() + 3 * 24 * 60 * 60 * 1000,
-        };
         // Handle successful response
         console.log(data);
         dispatch(setUser(data));
