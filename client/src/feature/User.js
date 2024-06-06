@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const getUserProfile = createAsyncThunk("user/getUserProfile", async () => {
   const res = await axios.get("https://thread-clone-pi-gules.vercel.app/user/auth", {
-    credentials: "include",
     withCredentials: true,
+    credentials: "include",
   });
   console.log(res.data);
   return res.data.user;
