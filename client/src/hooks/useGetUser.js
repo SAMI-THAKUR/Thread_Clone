@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { json, useParams } from "react-router-dom";
 import useShowToast from "./useShowToast";
 
 const useGetUserProfile = (props) => {
@@ -10,7 +9,6 @@ const useGetUserProfile = (props) => {
     const getUser = async () => {
       try {
         const res = await fetch(`https://thread-clone-pi-gules.vercel.app/user/profile/${props}`, {
-          credentials: "include",
           withCredentials: true,
         });
         let data = await res.json();
