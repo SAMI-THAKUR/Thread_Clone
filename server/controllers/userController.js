@@ -112,28 +112,41 @@ const updateUser = async (req, res) => {
   const { _id: currentUserId } = req.user;
   let { name, username, email, profilePic, bio } = req.body;
   const { id } = req.params;
-  if (id !== currentUserId.toString()) return res.status(400).json({ error: "You are not authorized to perform this action" });
+
+  // Check if the user is authorized to update this profile
+  if (id !== currentUserId.toString()) {
+    return res.status(400).json({ error: "You are not authorized to perform this action" });
+  }
+
   try {
+    // Fetch the user from the database
     let user = await User.findById(currentUserId);
-    if (!user) return res.status(400).json({ error: "Invalid password" });
-    if (profilePic != "") {
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    // If profilePic is provided and not empty, upload it
+    if (profilePic) {
       try {
         const uploadedResponse = await cloudinary.uploader.upload(profilePic);
         profilePic = uploadedResponse.secure_url;
-        console.log("image uploaded");
+        console.log("Image uploaded");
       } catch (err) {
         console.error("Error uploading image:", err);
         return res.status(500).json({ error: "Error uploading image" });
       }
     }
+
+    // Update the user's fields
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
-    user.password = user.password;
-    user = await user.save();
-    res.status(200).json({ message: "succes" });
+
+    // Save the updated user
+    await user.save();
+    res.status(200).json({ message: "Success" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

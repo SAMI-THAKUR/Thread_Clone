@@ -22,13 +22,7 @@ const signup = async (req, res) => {
       password,
     });
     createToken(user._id, res);
-    res.status(201).json({
-      id: user._id,
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      image: user.profilePic,
-    });
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: "phat gaya bc" });
   }

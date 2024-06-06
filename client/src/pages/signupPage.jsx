@@ -24,17 +24,9 @@ export default function SignupPage() {
         },
       );
       const data = res.data;
-      console.log(typeof data);
       if (data.error) {
         showToast("Error", data.error, "error");
       } else {
-        const now = new Date();
-        const item = {
-          value: data,
-          expiry: now.getTime() + 3 * 24 * 60 * 60 * 1000,
-        };
-        // Handle successful response
-        localStorage.setItem("user-threads", JSON.stringify(item));
         dispatch(setUser(JSON.stringify(data)));
         showToast("Success", "Sign up successful", "success");
         navigate("/");

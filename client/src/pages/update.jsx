@@ -20,7 +20,7 @@ export default function Update() {
   const [email, setEmail] = useState(user.email);
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio);
-  const [profilePic, setProfilePic] = useState(user.profilePic);
+  const [profilePic, setProfilePic] = useState("");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
