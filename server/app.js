@@ -39,9 +39,9 @@ app.use(cookieParser()); // Parse Cookie header and populate req.cookies with an
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 app.use(express.json());
-app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-app.use("/post", postRoutes);
+app.use("/auth", cors({ credentials: true, origin: "*" }), authRoutes);
+app.use("/user", cors({ credentials: true, origin: "*" }), userRoutes);
+app.use("/post", cors({ credentials: true, origin: "*" }), postRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
