@@ -33,9 +33,13 @@ export default function Header() {
   const toast = useToast();
   const logOut = async () => {
     try {
-      const res = await axios.get("https://thread-clone-pi-gules.vercel.app/auth/logout", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://thread-clone-pi-gules.vercel.app/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        },
+      );
       const data = res.data;
       console.log(data);
       if (data.error) {
