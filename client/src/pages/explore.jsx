@@ -9,10 +9,14 @@ export default function Explore() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await axios.get("https://thread-clone-6f8g.onrender.com/user/suggested", {
-          credentials: "include",
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          "https://thread-clone-6f8g.onrender.com/user/suggested",
+          {},
+          {
+            credentials: "include",
+            withCredentials: true,
+          },
+        );
         const data = res.data;
         if (data.error) {
           console.log(data.error);
