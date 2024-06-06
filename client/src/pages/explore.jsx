@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
-axios.defaults.withCredentials = true; // Default setting for all requests
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -11,6 +10,7 @@ export default function Explore() {
     const getFeed = async () => {
       try {
         const res = await axios.get("https://thread-clone-pi-gules.vercel.app/user/suggested", {
+          credentials: "include",
           withCredentials: true,
         });
         const data = res.data;
