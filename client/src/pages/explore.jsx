@@ -10,7 +10,7 @@ export default function Explore() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await axios.get("https://thread-clone-6f8g.onrender.com/user/suggested", {
+        const res = await axios.get("https://thread-clone-pi-gules.vercel.app/user/suggested", {
           withCredentials: true,
         });
         const data = res.data;

@@ -16,7 +16,7 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://thread-clone-6f8g.onrender.com/auth/signup",
+        "https://thread-clone-pi-gules.vercel.app/auth/signup",
         { name, username, email, password },
         {
           credentials: "include",

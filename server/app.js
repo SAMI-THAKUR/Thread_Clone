@@ -16,7 +16,7 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    origin: "https://thread-clone-bjsq.vercel.app/",
     credentials: true,
   }),
 );
