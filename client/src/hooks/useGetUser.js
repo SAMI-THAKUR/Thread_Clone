@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useShowToast from "./useShowToast";
+import axios from "axios";
 
 const useGetUserProfile = (props) => {
   const [user, setUser] = useState(null);
@@ -8,7 +9,7 @@ const useGetUserProfile = (props) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`https://thread-clone-pi-gules.vercel.app/user/profile/${props}`, {
+        const res = await axios.get(`https://thread-clone-pi-gules.vercel.app/user/profile/${props}`, {
           withCredentials: true,
         });
         let data = await res.json();
