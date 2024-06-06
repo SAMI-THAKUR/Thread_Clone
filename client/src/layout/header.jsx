@@ -28,14 +28,7 @@ export default function Header() {
   };
 
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
-  if (!user) {
-    return (
-      <Flex justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </Flex>
-    );
-  }
+  const user = useSelector((state) => state.user).user;
   const dispatch = useDispatch(); // Initialize useDispatch hook
   const toast = useToast();
   console.log(user);
