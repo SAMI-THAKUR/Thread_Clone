@@ -12,8 +12,7 @@ const useGetUserProfile = (props) => {
         const res = await axios.get(`https://thread-clone-pi-gules.vercel.app/user/profile/${props}`, {
           withCredentials: true,
         });
-        let data = await res.json();
-        data = data.user;
+        let data = res.data;
         if (data.error) {
           showToast("Error", data.error, "error");
           return;
