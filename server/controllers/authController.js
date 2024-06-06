@@ -60,8 +60,8 @@ const login = async (req, res) => {
 const logoutUser = (req, res) => {
   try {
     // Clear the cookie by setting its maxAge to 0 and using the same options as when it was set
-    res.cookie("auth", "", {
-      maxAge: 0,
+    res.clearCookie("auth", {
+      path: "/", // Set the path to the root directory
       httpOnly: true,
       secure: true, // Set secure flag to true in production
     });
