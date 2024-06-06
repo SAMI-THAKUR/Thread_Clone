@@ -27,7 +27,7 @@ export default function Explore() {
     getSuggestion(); // Call the getFeed function when the component mounts or when user changes
   }, [user]);
   return (
-    <div className="h-full">
+    <div className="pb-20 w-screen mx-5 mt-10 h-full" style={{ height: "100%" }}>
       <div class="flex justify-center items-center h-20 font-Konkhmer  text-head dark:text-darkhead font-semibold text-3xl tracking-widest">
         Suggested Users
       </div>
