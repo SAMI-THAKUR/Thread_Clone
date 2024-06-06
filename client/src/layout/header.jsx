@@ -41,7 +41,6 @@ export default function Header() {
       if (data.error) {
         console.log(data.error);
       } else {
-        localStorage.removeItem("user-threads");
         dispatch(setUser(null)); // Dispatch setUser action to update user state
         navigate("/");
         toast({
