@@ -69,16 +69,17 @@ userSchema.pre("save", async function (next) {
 // static method to login user
 userSchema.statics.login = async function (query, password) {
   const user = (await this.findOne({ email: query })) || (await this.findOne({ username: query }));
+
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
-    // console.log(user.password);
-    // console.log(await bcrypt.hash(password, 10));
     if (auth) {
       return user;
+    } else {
+      throw new Error("Incorrect password");
     }
-    throw Error("incorrect password");
+  } else {
+    throw new Error("User not found with given email or username");
   }
-  throw Error("incorrect email or username");
 };
 
 const User = model("user", userSchema);

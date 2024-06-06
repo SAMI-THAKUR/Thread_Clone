@@ -31,15 +31,18 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { query, password } = req.body;
-    let user = await User.login(query, password); // login is a custom static method in user model //
+
+    let user = await User.login(query, password);
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
+
     user.password = undefined;
     createToken(user._id, res);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: "error" });
+    console.error("Login error:", error.message); // Log the error for debugging
+    res.status(400).json({ error: error.message }); // Send a more specific error message
   }
 };
 
