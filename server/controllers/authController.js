@@ -4,7 +4,7 @@ import createToken from "../utils/helpers/generateJWT.js";
 
 dotenv.config();
 
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
   try {
