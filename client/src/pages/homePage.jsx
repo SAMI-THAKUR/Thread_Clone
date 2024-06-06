@@ -30,7 +30,12 @@ function HomePage() {
     getFeed(); // Call the getFeed function when the component mounts or when user changes
   }, [dispatch]);
 
-  if (user === null) return <div className="w-full h-full flex items-center justify-center text-yellow-50">Please login to view your feed</div>;
+  if (user === null)
+    return (
+      <div className="w-full h-full flex items-center justify-center text-yellow-50" style={{ height: "100%" }}>
+        Please login to view your feed
+      </div>
+    );
 
   return (
     <div className="z-0 pb-20 w-full mt-10 h-[10000px]" style={{ height: "100%" }}>

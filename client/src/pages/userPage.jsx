@@ -26,7 +26,7 @@ export default function UserPage() {
     };
     fetchUserPosts();
   }, [user, setPost]);
-  if (username === "undefined") return <h1>User not found</h1>;
+  if (username === "undefined") return <h1 style={{ height: "100%" }}>User not found</h1>;
   if (!user && loading) {
     return (
       <Flex justifyContent={"center"}>
@@ -34,9 +34,9 @@ export default function UserPage() {
       </Flex>
     );
   }
-  if (!user && !loading) return <h1>User not found</h1>;
+  if (!user && !loading) return <h1 style={{ height: "100%" }}>User not found</h1>;
   return (
-    <div className="z-0 pb-20 w-full mt-10 h-dvh">
+    <div className="z-0 pb-20 w-full mt-10" style={{ height: "100%" }}>
       <UserHeader user={user} />
       <div className="w-full mt-10">
         {post.map((post, idx) => (
