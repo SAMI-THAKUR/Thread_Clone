@@ -16,8 +16,8 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(
   cors({
-    origin: "https://thread-clone-bjsq.vercel.app/",
     credentials: true,
+    origin: ["https://thread-clone-bjsq.vercel.app/", "https://thread-clone-pi-gules.vercel.app/"],
   }),
 );
 cloudinary.config({
