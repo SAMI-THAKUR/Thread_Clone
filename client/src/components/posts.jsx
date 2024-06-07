@@ -16,13 +16,35 @@ export default function Tweet(props) {
     );
   }
   const { post } = props;
-  const liked = post.likes.includes(Curruser.id);
-  // console.log(Curruser.id);
+  const liked = post.likes.includes(Curruser._id);
   const { user, loading } = useGetUserProfile(post.postedBy);
   if (loading) {
     return <div>Loading...</div>;
   }
   const date = new Date(post.createdAt).toDateString().split(" ").slice(0, 3).join(" ");
+
+  const linkify = (text) => {
+    const urlPattern = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlPattern);
+
+    return parts.map((part, index) => {
+      if (urlPattern.test(part)) {
+        return (
+          <a
+            key={index}
+            href={part.startsWith("http") ? part : `https://${part}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300"
+          >
+            {part}
+          </a>
+        );
+      } else {
+        return part;
+      }
+    });
+  };
   return (
     <div className="px-5 sm:px-10 md:px-20">
       <div className="flex flex-shrink-0  py-3 ">
@@ -56,7 +78,7 @@ export default function Tweet(props) {
         </div>
       </div>
       <div className="pl-5 sm:pl-10 md:pl-16 w-full">
-        <p className="text-lg  flex-shrink-[2] text-text dark:text-darktext font-robo">{post.body}</p>
+        <p className="text-lg  flex-shrink-[2] text-text dark:text-darktext font-robo">{linkify(post.body)}</p>
         {post.image && <img src={post.image} className="mt-5 pr-5 object-scale-down max-h-[400px] drop-shadow-md rounded-md m-auto" />}
         <Action id={post["_id"]} liked={liked} />
         <div className="flex gap-x-5 -mt-2 mb-3 text-gray-400  -ml-1 font-mono">

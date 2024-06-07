@@ -1,12 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { Spinner, Flex } from "@chakra-ui/react";
 import { getUserProfile } from "../feature/User";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+
 export default function Update() {
   const dispatch = useDispatch();
   const store = useSelector((state) => state.user);
   const user = store.user;
+  const navigate = useNavigate();
+  const toast = useToast();
   // Separate state variables
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -68,13 +72,33 @@ export default function Update() {
 
       const data = res.data;
       if (data.error) {
-        // Handle error
+        toast({
+          title: "Error",
+          description: "Unable to Edit the profile",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       } else {
-        console.log(data);
         dispatch(getUserProfile());
+        toast({
+          title: "Success",
+          description: "Profile updated successfully",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate(`/`);
       }
     } catch (error) {
-      console.log(error.response ? error.response.data : error.message);
+      const errorMessage = error.response.data.error || "Something went wrong";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 

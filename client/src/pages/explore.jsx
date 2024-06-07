@@ -2,10 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
 export default function Explore() {
   const [suggest, setSuggest] = useState([]);
   const user = useSelector((state) => state.user).user;
+  const toast = useToast();
   useEffect(() => {
     const getSuggestion = async () => {
       try {
@@ -14,13 +16,24 @@ export default function Explore() {
         });
         const data = res.data;
         if (data.error) {
-          console.log(data.error);
+          toast({
+            title: "Error",
+            description: "Failed to get suggested users",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
         } else {
-          console.log(data.suggestedUsers);
           setSuggest(data.suggestedUsers);
         }
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "Error",
+          description: "Failed to get suggested users",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       }
     };
 
@@ -31,6 +44,7 @@ export default function Explore() {
       <div class="flex justify-center items-center h-20 font-Konkhmer  text-head dark:text-darkhead font-semibold text-3xl tracking-widest">
         Suggested Users
       </div>
+      {suggest.length === 0 && <div class="text-center text-gray-400 font-semibold text-2xl mt-20">No suggested users</div>}
       <div class="flex flex-wrap justify-center gap-5 px-5 py-10">
         {suggest.map((user, idx) => (
           <ProfileCard key={idx} user={user} />

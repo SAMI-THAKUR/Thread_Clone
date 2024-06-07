@@ -23,10 +23,9 @@ export default function Action(props) {
       );
       const data = res.data;
       if (data.error) {
-        console.log(data.error);
         toast({
           title: "Error",
-          description: data.error,
+          description: "Error is liking this Post",
           status: "error",
           duration: 2000,
           isClosable: true,
@@ -35,7 +34,7 @@ export default function Action(props) {
         if (liked) {
           const updatedPosts = posts.map((p) => {
             if (p._id === id) {
-              return { ...p, likes: p.likes.filter((id) => id !== user.id) };
+              return { ...p, likes: p.likes.filter((id) => id !== user._id) };
             }
             return p;
           });
@@ -43,7 +42,7 @@ export default function Action(props) {
         } else {
           const updatedPosts = posts.map((p) => {
             if (p._id === id) {
-              return { ...p, likes: [...p.likes, user.id] };
+              return { ...p, likes: [...p.likes, user._id] };
             }
             return p;
           });
@@ -51,7 +50,13 @@ export default function Action(props) {
         }
       }
     } catch (error) {
-      console.log(error.response ? error.response.data : error.message);
+      toast({
+        title: "Error",
+        description: "Error is liking this Post",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   // Include 'id' and 'liked' as dependencies

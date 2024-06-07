@@ -52,18 +52,16 @@ const login = async (req, res) => {
     createToken(user._id, res);
     res.status(200).json(user);
   } catch (error) {
-    console.error("Login error:", error.message); // Log the error for debugging
     res.status(400).json({ error: error.message }); // Send a more specific error message
   }
 };
 
 const logoutUser = (req, res) => {
   try {
-    // Clear the cookie by setting its maxAge to 0 and using the same options as when it was set
-    res.clearCookie("auth", {
-      path: "/", // Set the path to the root directory
-      httpOnly: true,
-      secure: true, // Set secure flag to true in production
+    res.cookie("auth", "", {
+      httpOnly: true, // cookie cannot be accessed by client side javascript
+      secure: true, // Set to true in production
+      maxAge: 1, // cookie is sent only to the same site as the one that originated it
     });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (err) {

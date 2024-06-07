@@ -17,7 +17,7 @@ export default function UserPage() {
       try {
         if (user?._id) {
           const res = await axios.get(`https://thread-clone-pi-gules.vercel.app/post/user/${user["_id"]}`);
-          dispatch(setPost([]));
+          dispatch(setPost(null));
           dispatch(setPost(res.data.posts));
         }
       } catch (error) {

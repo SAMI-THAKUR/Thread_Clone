@@ -6,7 +6,6 @@ export const getUserProfile = createAsyncThunk("user/getUserProfile", async () =
     withCredentials: true,
     credentials: "include",
   });
-  console.log(res.data);
   return res.data.user;
 });
 

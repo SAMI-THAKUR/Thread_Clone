@@ -34,7 +34,7 @@ export default function LoginPage() {
       }
     } catch (error) {
       // Handle network errors
-      const errorMessage = error.response.error || "Something went wrong";
+      const errorMessage = error.response.error || "Unable to login at the moment";
       showToast("Error", errorMessage, "error");
     }
   };

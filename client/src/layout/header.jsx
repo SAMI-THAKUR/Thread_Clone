@@ -33,7 +33,7 @@ export default function Header() {
   const toast = useToast();
   const logOut = async () => {
     try {
-      const res = await axios.get(
+      const res = await axios.post(
         "https://thread-clone-pi-gules.vercel.app/auth/logout",
         {},
         {
@@ -43,7 +43,12 @@ export default function Header() {
       const data = res.data;
       console.log(data);
       if (data.error) {
-        console.log(data.error);
+        toast({
+          title: "error in while logout",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       } else {
         dispatch(setUser(null)); // Dispatch setUser action to update user state
         navigate("/");
@@ -70,7 +75,7 @@ export default function Header() {
           isSidebarOpen ? "fixed" : "hidden"
         } z-10 top-0 left-0 h-screen md:h-100% md:overflow-hidden md:w-[650px]  md:mr-3 md:pr-10 md:sticky bg-opacity-75 bg-gray-900 md:bg-transparent  md:grid`}
       >
-        <div className=" h-full w-full px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
+        <div className=" h-full w-[350px] px-10 md:px-20 overflow-hidden flex flex-col justify-between  py-4  bg-bg dark:bg-darkbg border-r-2 border-gray-700">
           <div>
             <nav className="flex align-middle justify-center pt-5">
               <button onClick={toggleTheme}>

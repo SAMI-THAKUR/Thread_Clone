@@ -18,7 +18,6 @@ function Layout() {
       </Flex>
     );
   }
-  console.log(store);
   return (
     <main className="flex overflow-x-hidden w-screen bg-bg dark:bg-darkbg" style={{ height: "100vh" }}>
       <Header />

@@ -17,7 +17,6 @@ function UserHeader({ user }) {
   const dispatch = useDispatch();
 
   const toast = useToast();
-  console.log(user);
   const copyUrl = () => {
     try {
       const url = window.location.href;
@@ -40,7 +39,7 @@ function UserHeader({ user }) {
         },
       );
       if (res.data.error) {
-        show("Error", res.data.error, "error");
+        show("Error", "Error in following the user", "error");
       } else {
         show("Success", res.data.message, "success");
         let newFollowing = [...currUser.following];
@@ -53,7 +52,7 @@ function UserHeader({ user }) {
         setFollow(!following);
       }
     } catch (error) {
-      console.log(error.message);
+      show("Error", "Error in following the user", "error");
     }
   };
   return (

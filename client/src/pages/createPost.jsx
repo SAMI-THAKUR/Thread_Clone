@@ -34,12 +34,30 @@ const CreatePost = () => {
       );
       const data = res.data;
       if (data.error) {
-        toast("Error", data.error, "error");
+        toast({
+          title: "Error",
+          description: "Failed to create the post",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       } else {
-        toast("Success", "Post created successfully", "success");
+        toast({
+          title: "Success",
+          description: "Created the post",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
-      console.log(error.response ? error.response.data : error.message);
+      toast({
+        title: "Error",
+        description: "Failed to create the post",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   // Function to handle posting the new post

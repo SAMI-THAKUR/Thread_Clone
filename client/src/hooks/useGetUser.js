@@ -14,12 +14,12 @@ const useGetUserProfile = (props) => {
         });
         let data = res.data;
         if (data.error) {
-          showToast("Error", data.error, "error");
+          showToast("Error", "Can't Find the USER", "error");
           return;
         }
         setUser(data);
       } catch (error) {
-        showToast("Error", error.message, "error");
+        showToast("Error", "Can't Find the USER", "error");
       } finally {
         setLoading(false);
       }
