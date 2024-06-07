@@ -10,9 +10,6 @@ function HomePage() {
   const post = useSelector((state) => state.post).post;
   const dispatch = useDispatch();
   const toast = useToast();
-  if (!user) {
-    return <div class="text-center text-gray-400 font-semibold text-2xl mt-20">Please login to view feed</div>;
-  }
   useEffect(() => {
     const getFeed = async () => {
       try {
@@ -33,26 +30,14 @@ function HomePage() {
           dispatch(setPost(null));
           dispatch(setPost(data));
         }
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to get feed",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-      }
+      } catch (error) {}
     };
     getFeed(); // Call the getFeed function when the component mounts or when user changes
   }, [dispatch]);
 
-  if (user === null)
-    return (
-      <div className="w-full h-full flex items-center justify-center text-yellow-50" style={{ height: "100%" }}>
-        Please login to view your feed
-      </div>
-    );
-
+  if (!user) {
+    return <div class="text-center text-gray-400 font-semibold text-2xl mt-20">Please login to view feed</div>;
+  }
   return (
     <div className="z-0 pb-20 w-full mt-10 h-[10000px]" style={{ height: "100%" }}>
       {post.map((post, idx) => (

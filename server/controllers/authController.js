@@ -58,11 +58,12 @@ const login = async (req, res) => {
 
 const logoutUser = (req, res) => {
   try {
-    res.cookie("auth", "", {
-      httpOnly: true, // cookie cannot be accessed by client side javascript
-      secure: true, // Set to true in production
-      maxAge: 0.1, // cookie is sent only to the same site as the one that originated it
+    res.clearCookie("auth", {
+      path: "/", // Set the path to the root directory
+      httpOnly: true,
+      secure: true, // Set secure flag to true in production
     });
+    res.cookie("auth", "", { maxAge: 1 });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (err) {
     console.error("Error in logoutUser: ", err.message);
