@@ -33,13 +33,9 @@ export default function Header() {
   const toast = useToast();
   const logOut = async () => {
     try {
-      const res = await axios.post(
-        "https://thread-clone-pi-gules.vercel.app/auth/logout",
-        {},
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await axios.post("https://thread-clone-pi-gules.vercel.app/auth/logout", {
+        withCredentials: true,
+      });
       const data = res.data;
       console.log(data);
       if (data.error) {
@@ -50,14 +46,14 @@ export default function Header() {
           isClosable: true,
         });
       } else {
-        dispatch(setUser(null)); // Dispatch setUser action to update user state
-        navigate("/");
         toast({
           title: "Logout successfully!",
           status: "error",
           duration: 2000,
           isClosable: true,
         });
+        dispatch(setUser(null)); // Dispatch setUser action to update user state
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
