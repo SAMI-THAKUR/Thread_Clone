@@ -37,7 +37,6 @@ export default function Header() {
         withCredentials: true,
       });
       const data = res.data;
-      console.log(data);
       if (data.error) {
         toast({
           title: "error in while logout",
