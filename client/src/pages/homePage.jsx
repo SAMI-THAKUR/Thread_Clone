@@ -5,6 +5,10 @@ import { Tweet } from "../components/components";
 import { setPost } from "../feature/Post";
 import { useToast } from "@chakra-ui/react";
 
+const api = axios.create({
+  withCredentials: true,
+});
+
 function HomePage() {
   const user = useSelector((state) => state.user).user;
   const post = useSelector((state) => state.post).post;
@@ -13,10 +17,7 @@ function HomePage() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await axios.get("https://thread-clone-pi-gules.vercel.app/post/getfeed", {
-          credentials: "include",
-          withCredentials: true,
-        });
+        const res = await api.get("https://thread-clone-pi-gules.vercel.app/post/getfeed");
         const data = res.data;
         if (data.error) {
           toast({
