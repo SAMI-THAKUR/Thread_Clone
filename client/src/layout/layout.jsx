@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Spinner, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
+import CookieConsent from "./cookies.jsx";
 function Layout() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,6 +21,7 @@ function Layout() {
   }
   return (
     <main className="flex overflow-x-hidden w-screen bg-bg dark:bg-darkbg" style={{ height: "100vh" }}>
+      <CookieConsent />
       <Header />
       <Outlet />
     </main>
