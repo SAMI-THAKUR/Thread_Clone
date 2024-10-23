@@ -17,26 +17,6 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
-// CORS configuration with multiple origins
-const allowedOrigins = [
-  "https://thread-clone-bjsq.vercel.app",
-  "http://localhost:5173", // Add your local development URL
-  process.env.FRONTEND_URL, // Add this to your .env file
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  }),
-);
-
 // Cloudinary configuration
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
