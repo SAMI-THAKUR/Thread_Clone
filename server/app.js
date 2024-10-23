@@ -5,7 +5,8 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { v2 as cloudinary } from "cloudinary";
 import path from "path"; // Import path for serving static files
-// middleware //
+import { fileURLToPath } from "url"; // Import for getting the current file path
+import { dirname } from "path"; // Import for getting the directory name
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
@@ -22,11 +23,14 @@ app.use(
   }),
 );
 
+// Cloudinary configuration
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
+
+const __dirname = path.resolve();
 
 // Middleware
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -40,12 +44,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 
-// Serve static files from the client
-app.use(express.static(path.join(__dirname, "../client/build"))); // Adjust path as needed
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
-// Serve the frontend on any route that doesn't match the API routes
+// react app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html")); // Adjust path as needed
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
 });
 
 // Basic route for testing
