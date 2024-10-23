@@ -4,9 +4,9 @@ import connectDB from "./db/connectDB.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { v2 as cloudinary } from "cloudinary";
-import path from "path"; // Import path for serving static files
-import { fileURLToPath } from "url"; // Import for getting the current file path
-import { dirname } from "path"; // Import for getting the directory name
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
@@ -16,10 +16,24 @@ dotenv.config();
 const PORT = process.env.PORT || 4000;
 
 const app = express();
+
+// CORS configuration with multiple origins
+const allowedOrigins = [
+  "https://thread-clone-bjsq.vercel.app",
+  "http://localhost:5173", // Add your local development URL
+  process.env.FRONTEND_URL, // Add this to your .env file
+];
+
 app.use(
   cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-    origin: "https://thread-clone-bjsq.vercel.app", // Specify the exact origin
   }),
 );
 
@@ -33,28 +47,31 @@ cloudinary.config({
 const __dirname = path.resolve();
 
 // Middleware
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cookieParser()); // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
-app.use(express.json());
 
-// API Routes
+// API Routes - make sure they start with /api
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
-
-// react app
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+// Basic API test route
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API is working" });
 });
 
-// Basic route for testing
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+// Serve static files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client", "dist")));
+
+  // Handle React routing, return all requests to React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  });
+}
 
 // Connect to the database and start the server
 connectDB(process.env.MONGO_URL).then(() => {
