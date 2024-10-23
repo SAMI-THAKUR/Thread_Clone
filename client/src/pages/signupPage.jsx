@@ -17,7 +17,7 @@ export default function SignupPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://thread-clone-pi-gules.vercel.app/auth/signup",
+        "/api/auth/signup",
         { name, username, email, password },
         {
           withCredentials: true,

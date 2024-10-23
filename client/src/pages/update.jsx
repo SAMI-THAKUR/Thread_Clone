@@ -55,7 +55,7 @@ export default function Update() {
     console.log("clicked");
     try {
       const res = await axios.put(
-        `https://thread-clone-pi-gules.vercel.app/user/update/${user._id}`,
+        `/api/user/update/${user._id}`,
         {
           name,
           email,

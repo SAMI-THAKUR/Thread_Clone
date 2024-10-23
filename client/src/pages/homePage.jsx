@@ -17,7 +17,7 @@ function HomePage() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const res = await api.get("https://thread-clone-pi-gules.vercel.app/post/getfeed");
+        const res = await api.get("/api/post/getfeed");
         const data = res.data;
         if (data.error) {
           toast({

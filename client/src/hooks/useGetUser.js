@@ -9,7 +9,7 @@ const useGetUserProfile = (props) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`https://thread-clone-pi-gules.vercel.app/user/profile/${props}`, {
+        const res = await axios.get(`/api/user/profile/${props}`, {
           withCredentials: true,
         });
         let data = res.data;

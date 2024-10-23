@@ -15,7 +15,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://thread-clone-pi-gules.vercel.app/auth/login",
+        "/api/auth/login",
         { query, password },
         {
           credentials: "include",

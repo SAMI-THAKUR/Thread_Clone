@@ -34,7 +34,7 @@ export default function Header() {
   const logOut = async () => {
     try {
       const res = await axios.post(
-        "https://thread-clone-pi-gules.vercel.app/auth/logout",
+        "/api/auth/logout",
         {},
         {
           withCredentials: true,

@@ -31,7 +31,7 @@ function UserHeader({ user }) {
   const followUnfollow = async () => {
     try {
       const res = await axios.post(
-        `https://thread-clone-pi-gules.vercel.app/user/followUnfollow/${user._id}`,
+        `/api/user/followUnfollow/${user._id}`,
         {},
         {
           credentials: "include",
